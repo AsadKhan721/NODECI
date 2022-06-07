@@ -9,7 +9,10 @@ const exec = mongoose.Query.prototype.exec;
 mongoose.Query.prototype.cache = function (options = {}) {
   // here this refers to query object that is returned by Model.find()
   this.useCache = true; // by using useCache i can check if i need to cache this data or not?
+  // key(unique identifier) that will used to identify cached data on redis server. In this Case 
+  // Stringified Blogs which unique key will be user id
   this.hashKey = JSON.stringify(options.key || "");
+
   console.log("HAshKey", this.hashKey);
   return this; // returning this so that i can chain other functions like query.cache().limit().sort()
 };

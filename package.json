@@ -12,11 +12,11 @@
     "heroku-postbuild": "npm run build",
     "test": "jest"
   },
-  "author": "",
-  "license": "ISC",
   "jest": {
     "setupTestFrameworkScriptFile": "./tests/setup.js"
   },
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.188.0",
     "body-parser": "^1.17.2",

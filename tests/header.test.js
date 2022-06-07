@@ -1,5 +1,5 @@
 const Page = require("./helpers/Page");
-describe("Header", () => {
+describe("Header Component", () => {
   let page;
   beforeEach(async () => {
     page = await Page.build();
@@ -8,18 +8,27 @@ describe("Header", () => {
   afterEach(async () => {
     await page.close();
   });
-  xit("has correct logo", async () => {
-    const text = await page.getElementContent("a.brand-logo");
+  it("must show header Content ", async () => {
+    /* 
+    $eval takes 2 arguments 
+    1). selector used to select element 
+    2). function which will give use access to Element as Argument
+        the reason puppeteer takes second argument as function because 
+        puppetter runs in nodeJs and chromium runs completely separately
+        due to which this query will send to chromium instance and second function 
+        is turned into string and communicated to chromium instance so that we can get 
+        our Element
+    */
+    const text = await page.$eval("a.brand-logo", (el) => el.innerHTML);
     expect(text).toBe("Blogster");
   });
-  xit("gets into oAuth flow when we click login", async () => {
-    await page.click(".right a");
-    const url = page.url();
-    console.log(url);
-  });
-  xit("Show logout and myblogs anchor tags on Header when user is loggedin", async () => {
+  // Faking Google AuthFlow by setting Cookie on our Page Instance which show Tab(session)
+  it("must show logout button if user if loggedin", async () => {
     await page.login();
-    const text = await page.getElementContent("a[href='/auth/logout']");
-    expect(text).toBe("Logout");
+    const logoutLinkText = await page.$eval(
+      "a[href='/auth/logout']",
+      (el) => el.innerHTML
+    );
+    expect(logoutLinkText).toMatch(/logout/i);
   });
 });

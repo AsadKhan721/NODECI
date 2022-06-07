@@ -5,4 +5,5 @@ module.exports = {
   mongoURI: "mongodb://127.0.0.1:27017/blogs_ci",
   redis_url: "redis://127.0.0.1:6379",
   cookieKey: "123123123",
+  PORT: 3000,
 };

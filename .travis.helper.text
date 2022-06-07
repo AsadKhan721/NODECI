@@ -1,0 +1,39 @@
+language:
+ will specify what programming language i am using so in case of JS we specify node_js
+
+node_js:
+  will specify nodeJs version that our project can support so in case of this Project i specified version 8
+
+dist:
+  will specify Distribution that will be installed on Virtual machine given by travis so in this case 
+  i specified trusty which is a linux based OS that can be used for small tasks like running tests
+
+services:
+  will specify what other services our project uses that we want to install locally on the Distribution
+  like in this case my project is using 
+  - mongodb
+  - redis-server
+
+env:
+  let us define Environment Variables on travis Distribution, the reason why i am specifing NODE_ENV=ci
+  is because i want to specify some specify option for ci server from ci.js
+  - NODE_ENV=ci
+  - PORT= 3000
+cache:
+  tell Distribution that i want to cache these directories so whenever i push some code to github
+  it will not install new node_modules or client/node_modules due to which our code will run faster
+  directories:
+    - node_modules
+    - client/node_modules
+install:
+  tells Distribution what i want to run when our 
+  - npm install
+  - npm build
+script:
+  tells Distribution what scripts i want to run when new code is pushed to github
+  - nohup npm start &
+    nohup will ensure that npm start process runs if travis accidentally kills our terminal
+    & will make sure that this command runs in the subshell(means runs in the background so that we can excute other commands after it)
+  - sleep 3 
+    wait for 3 seconds so that our server starts
+  - npm run test
